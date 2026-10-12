@@ -1,58 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Tugas Web E-Commerce - Autentikasi, Multi-Role & Policy
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyek ini adalah tugas mata kuliah Pemrograman Web E-Commerce yang dibangun menggunakan **Laravel 11**. Fokus utama dari tugas ini adalah implementasi sistem Database Relasional, Autentikasi bawaan, *Role-Based Access Control* (RBAC), dan otorisasi menggunakan Policy.
 
-## About Laravel
+Fitur Utama yang Dikerjakan
+1. **Database & Eloquent (Bagian A):**
+   - Pembuatan skema tabel terelasi: `users`, `categories`, `products`, `orders`, `order_items`, `carts`, dan `reviews`.
+   - Implementasi Eloquent Model, *Relationships* (One-to-Many, dsb), dan Local Scope (`inStock`).
+   - Menggunakan **Seeder** dan **Factory** untuk menghasilkan 50 data dummy produk dan 1 akun Admin utama.
+2. **Authentication (Bagian B):**
+   - Instalasi **Laravel Breeze** (Blade Stack + Alpine.js + Tailwind CSS) untuk fitur Login, Register, dan Logout.
+   - Halaman utama (Welcome) otomatis dialihkan (*redirect*) ke halaman Login.
+3. **Multi-Role & Middleware:**
+   - Menambahkan custom `RoleMiddleware` untuk membedakan hak akses antara `admin` dan `user`.
+   - Melindungi *route* `/admin/dashboard` (Halaman tabel Produk) agar hanya bisa diakses oleh Admin. User biasa akan mendapatkan error **403 Forbidden**.
+4. **Resource Authorization (Policy):**
+   - Membuat `ProductPolicy` agar aksi pengubahan (Update) dan penghapusan (Delete) produk hanya diizinkan untuk *role* Admin.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Teknologi yang Digunakan
+- PHP 8.x
+- Laravel 11
+- MySQL (Laragon)
+- Tailwind CSS
+- Node.js (NPM)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Cara Instalasi & Menjalankan Proyek Lokal
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Jika ingin menjalankan proyek ini di komputer lain, ikuti langkah berikut:
 
-## Learning Laravel
+1. Clone repository ini:
+   ```bash
+   git clone [https://github.com/USERNAME_KAMU/TugasWeb-P11-EcommerceAuth.git](https://github.com/USERNAME_KAMU/TugasWeb-P11-EcommerceAuth.git)
+Masuk ke direktori proyek:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+cd TugasWeb-P11-EcommerceAuth
+Install dependensi PHP dan Node.js:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+composer install
+npm install
+Salin file .env dan generate key:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+cp .env.example .env
+php artisan key:generate
+Sesuaikan konfigurasi database di file .env (misal: DB_DATABASE=TugasWeb-P11-EcommerceAuth).
 
-## Agentic Development
+Jalankan migrasi beserta seeder untuk memunculkan data dummy:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+php artisan migrate --seed
+Build tampilan antarmuka (CSS/JS):
 
-```bash
-composer require laravel/boost --dev
+npm run build
+Nyalakan server lokal:
 
-php artisan boost:install
-```
+php artisan serve
+Akun Testing (Seeder)
+Gunakan kredensial berikut untuk menguji sistem Admin:
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Email: admin@admin.com
 
-## Contributing
+Password: password
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Role: admin
 
-## Code of Conduct
+Untuk role user, silakan gunakan fitur Register di halaman awal aplikasi.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Halaman Login: 
+  ![Halaman Login](screenshots/dsahboard-login.png)
 
-## Security Vulnerabilities
+- Dashboard Admin:
+  ![Dashboard Admin](screenshots/50-item.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Testing Incognito (Error 403 User Biasa): 
+  ![Error 403](screenshots/403.png)
 
-## License
+  - Testing midware (rolemiddware): 
+  ![rolemiddware](screenshots/rolemiddware.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  - Testing policy (reviewpolicy): 
+  ![reviewpolicy](screenshots/reviewpolicy.png)
